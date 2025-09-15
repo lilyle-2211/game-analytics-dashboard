@@ -12,9 +12,7 @@ from dashboard.tabs.acquisition.visualizations.charts import (
 from dashboard.tabs.acquisition.insights.manual_insights import (
     TIMESERIES_INSIGHTS,
     WEEKLY_PATTERNS_INSIGHTS,
-    DEMOGRAPHICS_INSIGHTS,
-    WEEKLY_PATTERNS_EMPTY,
-    DEMOGRAPHICS_EMPTY
+    DEMOGRAPHICS_INSIGHTS
 )
 
 
@@ -83,12 +81,6 @@ def _render_weekly_patterns_analysis(df_clean, explainer):
                     height=400,
                     key_suffix="weekly"
                 )
-            else:
-                render_manual_insights(
-                    WEEKLY_PATTERNS_EMPTY,
-                    height=150,
-                    key_suffix="weekly_empty"
-                )
 
 
 def _render_demographics_analysis(df_clean, explainer):
@@ -109,10 +101,4 @@ def _render_demographics_analysis(df_clean, explainer):
                     DEMOGRAPHICS_INSIGHTS,
                     height=600,
                     key_suffix="demographics"
-                )
-            else:
-                render_manual_insights(
-                    DEMOGRAPHICS_EMPTY,
-                    height=200,
-                    key_suffix="demographics_empty"
                 )
