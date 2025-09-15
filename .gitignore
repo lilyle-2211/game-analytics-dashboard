@@ -8,8 +8,14 @@ wheels/
 
 # Virtual environments
 .venv
+
+# Credentials and secrets
 .streamlit/secrets.toml
+service-account-key.json
+
+# Large files
 google-cloud-cli-*.tar.gz
+
 # Contributors cleanup
 # Force refresh - Mon Sep 15 03:18:55 BST 2025
 .claude/
