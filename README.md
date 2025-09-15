@@ -1,8 +1,8 @@
-# Analytics Dashboard Portfolio 📊
+# Analytics Dashboard Portfolio
 
 A comprehensive analytics dashboard showcasing advanced data analysis capabilities, featuring A/B testing sample size calculators and statistical analysis tools built with Streamlit.
 
-## 🌟 Key Features
+## Key Features
 
 ### Analytics Modules
 - **LTV Analysis**: Customer lifetime value projections and segmentation
@@ -17,14 +17,14 @@ A comprehensive analytics dashboard showcasing advanced data analysis capabiliti
 - **Statistical Foundation**: Powered by `statsmodels` library
 - **Transparent Calculations**: View exact Python code for all computations
 
-## 🔧 Technical Implementation
+## Technical Implementation
 
 - **Framework**: Streamlit
 - **Statistics**: statsmodels, scipy, numpy
 - **Data Processing**: pandas
 - **Python**: 3.8+
 
-## 🚀 Getting Started
+## Getting Started
 
 1. **Clone the repository**
    ```bash
@@ -44,7 +44,7 @@ A comprehensive analytics dashboard showcasing advanced data analysis capabiliti
 
 4. **Access the dashboard** at `http://localhost:8501`
 
-## 📊 Statistical Capabilities
+## Statistical Capabilities
 
 ### Testing Methods
 - **Proportion Testing**: Conversion rates, completion rates, and binary outcomes
@@ -58,7 +58,7 @@ A comprehensive analytics dashboard showcasing advanced data analysis capabiliti
 - Proper alpha adjustment: `α_adjusted = α / number_of_treatments`
 - Support for unequal group allocation ratios
 
-## 📁 Dashboard Structure
+## Dashboard Structure
 
 ```
 analytics-dashboard-portfolio/
@@ -75,6 +75,29 @@ analytics-dashboard-portfolio/
 │   └── utils/                  # Helper functions
 └── requirements.txt            # Dependencies
 ```
+
+## Professional Applications
+
+- **Analytics Teams**: Comprehensive performance dashboards
+- **Data Scientists**: Statistical experimentation toolkit
+- **Product Teams**: Data-driven decision making
+- **Growth Teams**: Acquisition and retention optimization
+
+## Portfolio Highlights
+
+- **Clean Architecture**: Modular, maintainable code structure
+- **Statistical Rigor**: Proper implementation of testing methodologies
+- **Professional UI**: Intuitive interface with synchronized layouts
+- **Transparent Analysis**: Viewable calculation code for verification
+
+## Contact
+
+For inquiries: where.ai.meets.roi@gmail.com
+
+---
+
+**Professional Analytics Dashboard Portfolio**  
+*Demonstrating expertise in statistical analysis, data visualization, and dashboard development*
 
 ## 🎯 Professional Applications
 
