@@ -1,8 +1,4 @@
-"""Manual insights text for monetization tab.
-
-This module contains only text constants for the manual insights sections.
-The rendering logic is handled in the main.py module.
-"""
+"""Manual insights for monetization tab."""
 
 # IAP Revenue insights
 IAP_REVENUE_INSIGHTS = """
@@ -20,7 +16,7 @@ Daily ad revenue jumping from $10-15 to $50+ and eventually reaching $100+ per d
 Players becoming more comfortable with ad-supported gameplay.
 """
 
-# Revenue per User insights  
+# Revenue per User insights
 REVENUE_PER_USER_INSIGHTS = """
 $1.62 ARPDAU - significantly above industry benchmarks ($0.10-0.30).
 

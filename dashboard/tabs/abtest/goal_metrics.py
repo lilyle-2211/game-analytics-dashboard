@@ -4,60 +4,50 @@ import streamlit as st
 
 def render_goal_metrics_tab():
     """Render the goal metrics setting tab."""
-    
-    st.markdown("""
-    ## A/B Test Planning: New Level Design Experiment
-    
-    We are conducting an A/B test to evaluate a new level design in our initial levels, 
-    targeting the U.S. player population. This test aims to optimize early-game engagement 
-    while maintaining technical performance.
-    
-    ### Treatment Definition
-    
-    **Control Group:** Players experience the current initial level design
-    
-    **Treatment Group:** Players experience the redesigned initial levels with isolated 
-    impact. Only level design changes, all other factors remain constant
-    
-    ### Hypothesis Framework
 
-    **Null Hypothesis:** The new level design has no significant impact on player
-    engagement, retention, or technical issues compared to the current design.
+    st.markdown(
+        """
+    ## A/B Test Plan: Level Design Changes
 
-    **Alternative Hypothesis:** The new level design improves early-game engagement
-    and retention without negatively affecting technical performance of the game.
-    
-    ### Primary Success Metrics
-    
+    Testing new level design in opening levels for U.S. players to improve early
+    engagement without affecting performance.
+
+    ### Groups
+
+    **Control:** Current level design
+
+    **Treatment:** New level design (level changes only)
+
+    ### Hypothesis
+
+    **H0:** New design has no significant impact on engagement or retention
+
+    **H1:** New design improves engagement and retention
+
+    ### Success Metrics
+
     **Day 1 Retention**
-    - Definition: Percentage of players returning the day after install
-    - Target: Statistically significant improvement
-    
+    - Current: ~% baseline
+    - Target: Significant improvement
+
     **Level Completion Rate**
-    - Definition: Percentage of players completing the first Xth level
-    - Target: Higher completion without compromising difficulty
+    - Current: ~% complete first 5 levels
+    - Target: Higher completion
 
-    
     ### Guardrail Metrics
-    
-    These metrics must not worsen significantly:
-    
+
     **Session Length**
-    - Monitor: Average minutes per session
-    - Threshold: No decrease greater than X percent.
-    
-    **Technical Stability**
-    - Monitor: Crash rate and error events
-    - Threshold: No increase in technical issues
-    
-    ### Tracking Metrics
-    
-    Additional metrics to understand the impact: Player advancement speed
+    - Threshold: No decrease >10%
 
-    
-    ### Expected Outcomes
+    **Crash Rate**
+    - Threshold: No increase
 
-    Success will be measured by improved retention and engagement without technical issues. Launch decision will be based on statistical
-    significance and business impact assessment.
-    """)
-    
+    ### Analysis Plan
+
+    **Randomization:** Player level, U.S. new installs only
+
+    **Traffic:** Start 5-10%, scale to 50/50
+
+    **Test:** Two-proportion z-test for both retention and completion rates
+    """
+    )

@@ -15,6 +15,6 @@ SELECT 'No data available' as message
 """
 
 LTV_ROI_QUERY = """
--- Placeholder for ROI analysis query  
+-- Placeholder for ROI analysis query
 SELECT 'No data available' as message
 """

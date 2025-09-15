@@ -1,8 +1,4 @@
-"""Manual insights text for engagement tab.
-
-This module contains only text constants for the manual insights sections.
-The rendering logic is handled in the main.py module.
-"""
+"""Manual insights for engagement tab."""
 
 # Daily engagement insights
 DAILY_USER_METRICS = """
@@ -20,7 +16,7 @@ Healthy DAU Growth:
 - Consistent momentum: No plateau or decline visible
 
 Healthy Retention:
-- 57.4% average return rate 
+- 57.4% average return rate
 - Stable retention: Maintains 55-65% range after initial ramp-up
 """
 
@@ -45,5 +41,5 @@ Difficulty spike around level 200-500 slows completion progression ~5 days
 
 Over this milestone, completion times improve to ~4 days per 100 levels after level 700
 
-As players get more experienced, they progress faster starting around level 800th 
+As players get more experienced, they progress faster starting around level 800th
 """

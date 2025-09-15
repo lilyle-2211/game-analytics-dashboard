@@ -1,8 +1,4 @@
-"""Manual insights text for acquisition tab.
-
-This module contains only text constants for the manual insights sections.
-The rendering logic is handled in the main.py module.
-"""
+"""Manual insights for acquisition tab."""
 
 # Timeseries insights
 TIMESERIES_INSIGHTS = """
@@ -33,11 +29,11 @@ Weekend Recovery:
 
 # Demographics insights
 DEMOGRAPHICS_INSIGHTS = """
-Platform Split: 
+Platform Split:
 - Android dominance: ~60% vs iOS ~40%
 
-Gender Balance: 
-- Broad appeal across genders: Nearly 50/50 male/female 
+Gender Balance:
+- Broad appeal across genders: Nearly 50/50 male/female
 
 Acquisition Success:
 - Organic-driven growth: ~85% organic vs ~15% paid marketing
@@ -47,5 +43,3 @@ Age Demographics:
 - Younger skew: Heaviest in ≤30 age group (~6k users)
 - Equal appeal across active adult segments (31-40, 41-50, 51-60)
 """
-
-

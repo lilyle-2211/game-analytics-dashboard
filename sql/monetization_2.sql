@@ -1,34 +1,7 @@
-"""SQL queries for monetization analytics."""
+-- Revenue by Source Query
+-- This query analyzes daily revenue metrics by source (IAP vs Ad) with anomaly filtering
+-- Used for: Monetization analytics dashboard - tracking revenue performance, ARPDAU, and user spending patterns
 
-ANOMALY_TRANSACTIONS_QUERY = """
--- SQL Query to identify statistical outliers in transaction data
-WITH transaction_stats AS (
-  SELECT
-    revenue_type,
-    AVG(transaction_value) AS avg_transaction,
-    AVG(transaction_value) * 100 AS threshold_100x -- 100x average threshold
-  FROM `tactile-471816.data_analyst_test_local.revenues`
-  WHERE transaction_value > 0 AND eventDate >= '2022-06-06'
-  GROUP BY revenue_type
-)
-
-SELECT
-  t.eventDate,
-  t.user_id,
-  t.revenue_type,
-  t.transaction_value,
-  s.avg_transaction,
-  ROUND(t.transaction_value / s.avg_transaction, 1) AS times_avg
-FROM `tactile-471816.data_analyst_test_local.revenues` t
-JOIN transaction_stats s ON t.revenue_type = s.revenue_type
-WHERE
-  (t.transaction_value > s.threshold_100x) AND eventDate >= '2022-06-06'
-ORDER BY t.transaction_value DESC, t.eventDate
-"""
-
-
-REVENUE_BY_SOURCE_QUERY = """
--- US Official Launch data with clean anomaly filtering
 WITH filtered_revenue AS (
   SELECT
     eventDate AS revenue_date,
@@ -107,4 +80,3 @@ FROM daily_metrics d
 LEFT JOIN activity_data a ON d.revenue_date = a.date
 CROSS JOIN overall_totals t
 ORDER BY d.revenue_date
-"""

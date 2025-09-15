@@ -1,6 +1,7 @@
-"""SQL queries for player acquisition analytics."""
+-- Player Distribution Query
+-- This query analyzes player acquisition data by install date, platform, country, channel type, and demographics
+-- Used for: Player acquisition analytics dashboard - tracking user acquisition trends and distribution patterns
 
-PLAYER_DISTRIBUTION_QUERY = """
 SELECT
   case when install_date is null then null ELSE DATE(SAFE.PARSE_TIMESTAMP('%Y-%m-%dT%H:%M:%E*SZ', install_date)) end as install_date,
   CASE
@@ -33,4 +34,3 @@ WHERE DATE(SAFE.PARSE_TIMESTAMP('%Y-%m-%dT%H:%M:%E*SZ', install_date)) >= '2020-
   AND DATE(SAFE.PARSE_TIMESTAMP('%Y-%m-%dT%H:%M:%E*SZ', install_date)) <= CURRENT_DATE()
 GROUP BY 1, 2, 3, 4, 5, 6, 7
 ORDER BY 1
-"""
