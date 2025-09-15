@@ -58,7 +58,6 @@ def get_bigquery_client():
         return None
         
     except Exception as e:
-        st.warning(f"BigQuery authentication failed: {str(e)}")
         return None
 
 
@@ -99,7 +98,7 @@ def get_bigquery_data(query):
             query_job = client.query(query)
             return query_job.to_dataframe()
         except Exception as e:
-            st.warning(f"BigQuery query failed: {str(e)}. Falling back to cached data.")
+            pass
     
     # Fallback to CSV files
     query_type = identify_query_type(query)
@@ -108,11 +107,9 @@ def get_bigquery_data(query):
         if os.path.exists(csv_file):
             try:
                 df = pd.read_csv(csv_file)
-                st.info(f"📊 Loading cached data from {csv_file.split('/')[-1]} - A/B testing calculators work independently!")
                 return df
             except Exception as e:
-                st.error(f"Failed to load cached data: {str(e)}")
+                pass
     
     # If no matching CSV file found
-    st.warning("No cached data available for this query. Please check your data files.")
     return pd.DataFrame()
