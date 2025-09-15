@@ -13,7 +13,7 @@ from ..queries import REVENUE_BY_SOURCE_QUERY, ANOMALY_TRANSACTIONS_QUERY
 def render_iap_metrics(df, anomaly_df):
     """Render IAP revenue metrics."""
     # Calculate anomaly metrics dynamically
-    if not anomaly_df.empty:
+    if not anomaly_df.empty and 'revenue_type' in anomaly_df.columns:
         anomaly_iap = anomaly_df[anomaly_df['revenue_type'] == 'iap']['transaction_value'].sum()
         anomaly_count = len(anomaly_df[anomaly_df['revenue_type'] == 'iap'])
     else:
@@ -51,7 +51,7 @@ def plot_iap_chart(df, anomaly_df, explainer):
     chart_df = df.copy()
     
     # Add back anomaly transactions for chart visualization
-    if not anomaly_df.empty:
+    if not anomaly_df.empty and 'revenue_type' in anomaly_df.columns:
         for _, anomaly_row in anomaly_df[anomaly_df['revenue_type'] == 'iap'].iterrows():
             anomaly_date = pd.to_datetime(anomaly_row['eventDate'])
             anomaly_amount = anomaly_row['transaction_value']
@@ -83,7 +83,7 @@ def plot_iap_chart(df, anomaly_df, explainer):
     )
     
     # Highlight all anomaly points
-    if not anomaly_df.empty:
+    if not anomaly_df.empty and 'revenue_type' in anomaly_df.columns:
         anomaly_dates = []
         anomaly_values = []
         for _, anomaly_row in anomaly_df[anomaly_df['revenue_type'] == 'iap'].iterrows():
@@ -153,7 +153,7 @@ def plot_ad_chart(df, explainer):
 def plot_revenue_per_user_metrics(df, anomaly_df):
     """Render revenue per user metrics analysis."""
     # Calculate anomaly metrics
-    if not anomaly_df.empty:
+    if not anomaly_df.empty and 'revenue_type' in anomaly_df.columns:
         anomaly_iap = anomaly_df[anomaly_df['revenue_type'] == 'iap']['transaction_value'].sum()
         anomaly_count = len(anomaly_df[anomaly_df['revenue_type'] == 'iap'])
     else:
@@ -242,7 +242,7 @@ def display_raw_data_section(df, anomaly_df):
         """, unsafe_allow_html=True)
         
         # Calculate anomaly info
-        if not anomaly_df.empty:
+        if not anomaly_df.empty and 'revenue_type' in anomaly_df.columns:
             anomaly_iap = anomaly_df[anomaly_df['revenue_type'] == 'iap']['transaction_value'].sum()
             anomaly_count = len(anomaly_df[anomaly_df['revenue_type'] == 'iap'])
             
