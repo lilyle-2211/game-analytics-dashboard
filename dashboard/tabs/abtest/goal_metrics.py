@@ -7,47 +7,78 @@ def render_goal_metrics_tab():
 
     st.markdown(
         """
-    ## A/B Test Plan: Level Design Changes
+    ## A/B Test Planning: New Level Design Experiment
 
-    Testing new level design in opening levels for U.S. players to improve early
-    engagement without affecting performance.
+    This A/B test evaluates a new level design in the opening levels, specifically
+    targeting U.S. players. The goal is to boost early-game engagement while keeping
+    technical performance stable.
 
-    ### Groups
+    ### Treatment Definition
 
-    **Control:** Current level design
+    **Control Group:** Players see the current initial level design
 
-    **Treatment:** New level design (level changes only)
+    **Treatment Group:** Players experience redesigned initial levels with isolated changes.
+    Only the level design changes, everything else stays exactly the same.
 
-    ### Hypothesis
+    ### Hypothesis Framework
 
-    **H0:** New design has no significant impact on engagement or retention
+    **Null Hypothesis:** The new level design doesn't significantly impact player
+    engagement, retention, or technical performance compared to the current design.
 
-    **H1:** New design improves engagement and retention
+    **Alternative Hypothesis:** The new level design improves early-game engagement
+    and retention without hurting the game's technical performance.
 
-    ### Success Metrics
+    ### Primary Success Metrics
 
     **Day 1 Retention**
-    - Current: ~% baseline
-    - Target: Significant improvement
+    - Measurement: Percentage of players who return the day after installing
+    - Target: A statistically significant improvement
 
     **Level Completion Rate**
-    - Current: ~% complete first 5 levels
-    - Target: Higher completion
+    - Measurement: Percentage of players who complete the first X levels
+    - Target: Higher completion rates without making the game too easy
 
     ### Guardrail Metrics
+    (These metrics shouldn't be worsen during the test)
 
     **Session Length**
-    - Threshold: No decrease >10%
+    - Monitor: Average minutes per session. Threshold: No decrease greater than X%
 
-    **Crash Rate**
-    - Threshold: No increase
+    **Technical Stability**
+    - Monitor: Crash rates and error events. Threshold: No increase in technical problems
 
-    ### Analysis Plan
+    ### Tracking Metrics
 
-    **Randomization:** Player level, U.S. new installs only
+    Player Advancement Speed: How quickly players progress through levels
 
-    **Traffic:** Start 5-10%, scale to 50/50
+    ### Expected Outcomes
 
-    **Test:** Two-proportion z-test for both retention and completion rates
+    The test will be considered successful if improved retention and engagement occur
+    without any technical issues. Launch decisions will depend on both statistical
+    significance and overall business impact.
+
+    ### Unit of Randomization
+
+    Randomization occurs at the player level. Every new U.S. player who installs or opens
+    the game for the first time gets randomly assigned to either the control (current design)
+    or treatment (new design). Each player only ever sees one version.
+
+    ### When Players Enter the Experiment
+
+    Players enter the experiment the moment they start the game for the first time.
+    The test includes only:
+    - New installs start from the test window
+    - Excludes returning players so prior experience doesn't bias results
+
+    The rollout starts with a small portion of traffic (around 5-10%) to ensure
+    everything runs smoothly, then scales up.
+
+    ### Statistical Analysis Plan
+
+    For Day 1 Retention as primary success metric, the analysis compares the proportion of players who return
+    the next day in the treatment group versus the control group. Since this is a
+    proportion outcome, a two-proportion z-test will check if the difference between groups is statistically significant.
+
+    Similarly, for Level Completion Rate, a two-proportion z-test will compare the percentage of players who complete the first X levels in each group.
     """
     )
