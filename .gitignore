@@ -1,0 +1,15 @@
+# Python-generated files
+__pycache__/
+*.py[oc]
+build/
+dist/
+wheels/
+*.egg-info
+
+# Virtual environments
+.venv
+.streamlit/secrets.toml
+google-cloud-cli-*.tar.gz
+# Contributors cleanup
+# Force refresh - Mon Sep 15 03:18:55 BST 2025
+.claude/

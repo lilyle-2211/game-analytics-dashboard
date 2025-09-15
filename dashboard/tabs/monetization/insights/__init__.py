@@ -1,0 +1,1 @@
+"""Insights components for monetization analytics."""

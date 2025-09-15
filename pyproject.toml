@@ -1,0 +1,25 @@
+[project]
+name = "demo-job"
+version = "0.1.0"
+description = "BigQuery data fetching project"
+# readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "google-cloud-bigquery",
+    "pandas",
+    "db-dtypes",
+    "streamlit",
+    "plotly",
+    "numpy",
+    "google-generativeai",
+    "openai",
+    "scipy>=1.16.2",
+    "statsmodels>=0.14.5",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["."]
