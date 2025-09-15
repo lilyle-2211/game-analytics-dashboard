@@ -7,7 +7,6 @@ A comprehensive Streamlit dashboard for game analytics including:
 - Monetisation analytics  
 - A/B testing insights
 - LTV analysis
-- AI-powered assistant
 
 Command line usage:
     streamlit run streamlit_app.py -- --enable-ai
@@ -23,7 +22,6 @@ from dashboard.tabs.engagement.main import render_engagement_tab
 from dashboard.tabs.monetization.main import render_monetization_tab
 from dashboard.tabs.abtest.main import render_abtest_tab
 from dashboard.tabs.ltv.main import render_ltv_tab
-from dashboard.tabs.assistant.main import render_assistant_tab
 from dashboard.tabs.contact.main import render_contact_tab
 
 # Import utilities
@@ -84,7 +82,6 @@ def main():
         "MONETISATION",
         "A/B TEST",
         "LTV", 
-        "AI ASSISTANT",
         "CONTACT ME!"
     ]
     
@@ -135,7 +132,7 @@ def main():
     </style>
     """
     st.markdown(tab_styles, unsafe_allow_html=True)
-    tab1, tab2, tab3, tab4, tab5, tab6, tab7 = st.tabs(tab_names)
+    tab1, tab2, tab3, tab4, tab5, tab6 = st.tabs(tab_names)
 
     # Render each tab
     with tab1:
@@ -154,9 +151,6 @@ def main():
         render_ltv_tab()
 
     with tab6:
-        render_assistant_tab()
-        
-    with tab7:
         render_contact_tab()
         
     # Create a footer area for the AI toggle at the bottom right
