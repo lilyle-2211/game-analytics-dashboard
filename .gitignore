@@ -13,6 +13,9 @@ wheels/
 .streamlit/secrets.toml
 service-account-key.json
 
+# Export scripts (development only)
+export_data.py
+
 # Large files
 google-cloud-cli-*.tar.gz
 

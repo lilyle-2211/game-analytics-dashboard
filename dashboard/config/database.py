@@ -7,6 +7,27 @@ import json
 import os
 
 
+# CSV file mapping for different queries
+CSV_FILE_MAPPING = {
+    # Engagement queries
+    "DAILY_ENGAGEMENT_QUERY": "data/daily_engagement.csv",
+    "DAILY_RETURN_RATE_QUERY": "data/daily_return_rate.csv", 
+    "TWO_WEEK_RETENTION_QUERY": "data/two_week_retention.csv",
+    "PROGRESSION_MILESTONE_QUERY": "data/progression_milestone.csv",
+    
+    # LTV queries
+    "REVENUE_SEGMENTATION_QUERY": "data/revenue_segmentation.csv",
+    "RETENTION_RATE_QUERY": "data/retention_rate.csv",
+    
+    # Monetization queries
+    "REVENUE_BY_SOURCE_QUERY": "data/revenue_by_source.csv",
+    "ANOMALY_TRANSACTIONS_QUERY": "data/anomaly_transactions.csv",
+    
+    # Acquisition queries
+    "PLAYER_DISTRIBUTION_QUERY": "data/player_distribution.csv",
+}
+
+
 @st.cache_resource
 def get_bigquery_client():
     """Get BigQuery client with multiple authentication methods."""
@@ -41,18 +62,57 @@ def get_bigquery_client():
         return None
 
 
+def identify_query_type(query):
+    """Identify which CSV file to use based on the query content."""
+    query_lower = query.lower().strip()
+    
+    # Check for specific table patterns or query characteristics
+    if "daily_active_users" in query_lower and "levels_played" in query_lower:
+        return "DAILY_ENGAGEMENT_QUERY"
+    elif "daily_return_rate_pct" in query_lower or "returned_next_day" in query_lower:
+        return "DAILY_RETURN_RATE_QUERY"
+    elif "two_week_retention_pct" in query_lower or "active_week_2" in query_lower:
+        return "TWO_WEEK_RETENTION_QUERY"
+    elif "milestone_level" in query_lower or "completion_rate" in query_lower:
+        return "PROGRESSION_MILESTONE_QUERY"
+    elif "revenue_day1_20" in query_lower:
+        return "REVENUE_SEGMENTATION_QUERY"
+    elif "retention_rate_day1_20" in query_lower:
+        return "RETENTION_RATE_QUERY"
+    elif "revenue_type" in query_lower and "eventdate" in query_lower:
+        return "REVENUE_BY_SOURCE_QUERY"
+    elif "anomaly" in query_lower or "threshold_100x" in query_lower:
+        return "ANOMALY_TRANSACTIONS_QUERY"
+    elif "install_date" in query_lower and "platform" in query_lower:
+        return "PLAYER_DISTRIBUTION_QUERY"
+    
+    return None
+
+
 @st.cache_data
 def get_bigquery_data(query):
-    """Execute BigQuery query and return DataFrame."""
+    """Execute BigQuery query and return DataFrame, fallback to CSV files."""
+    # First try BigQuery
     client = get_bigquery_client()
-    if client is None:
-        st.info("📊 Running in demo mode - BigQuery not available. The A/B testing calculators work independently!")
-        # Return empty DataFrame for demo purposes
-        return pd.DataFrame()
+    if client is not None:
+        try:
+            query_job = client.query(query)
+            return query_job.to_dataframe()
+        except Exception as e:
+            st.warning(f"BigQuery query failed: {str(e)}. Falling back to cached data.")
     
-    try:
-        query_job = client.query(query)
-        return query_job.to_dataframe()
-    except Exception as e:
-        st.warning(f"BigQuery query failed: {str(e)}. Running in demo mode.")
-        return pd.DataFrame()
+    # Fallback to CSV files
+    query_type = identify_query_type(query)
+    if query_type and query_type in CSV_FILE_MAPPING:
+        csv_file = CSV_FILE_MAPPING[query_type]
+        if os.path.exists(csv_file):
+            try:
+                df = pd.read_csv(csv_file)
+                st.info(f"📊 Loading cached data from {csv_file.split('/')[-1]} - A/B testing calculators work independently!")
+                return df
+            except Exception as e:
+                st.error(f"Failed to load cached data: {str(e)}")
+    
+    # If no matching CSV file found
+    st.warning("No cached data available for this query. Please check your data files.")
+    return pd.DataFrame()
