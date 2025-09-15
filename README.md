@@ -1,35 +1,35 @@
-# Game Analytics Showcase 🎮📊
+# Analytics Dashboard Portfolio 📊
 
-A comprehensive analytics dashboard for game data analysis, featuring advanced A/B testing sample size calculators and statistical analysis tools.
+A comprehensive analytics dashboard showcasing advanced data analysis capabilities, featuring A/B testing sample size calculators and statistical analysis tools built with Streamlit.
 
-## 🌟 Features
+## 🌟 Key Features
 
-### Analytics Dashboards
+### Analytics Modules
 - **LTV Analysis**: Customer lifetime value projections and segmentation
-- **Engagement Metrics**: User engagement tracking and analysis
-- **Acquisition Analytics**: User acquisition funnel and performance metrics
-- **Monetization Insights**: Revenue analysis and monetization optimization
+- **Engagement Metrics**: User engagement tracking and behavioral analysis
+- **Acquisition Analytics**: User acquisition funnel optimization
+- **Monetization Insights**: Revenue analysis and optimization strategies
 
-### A/B Testing Tools
-- **Dual Calculator Layout**: Side-by-side comparison of testing scenarios
-- **1 Control vs 1 Treatment**: Standard A/B test sample size calculation
-- **1 Control vs Multiple Treatments**: Advanced multi-variant testing with Bonferroni correction
-- **Statistical Rigor**: Proper implementation using `statsmodels` library
-- **Interactive Python Code**: Expandable sections showing exact calculations
+### A/B Testing Calculators
+- **Dual Calculator Interface**: Side-by-side comparison of testing scenarios
+- **Standard A/B Testing**: Control vs treatment sample size calculations
+- **Multi-Variant Testing**: Advanced testing with Bonferroni correction
+- **Statistical Foundation**: Powered by `statsmodels` library
+- **Transparent Calculations**: View exact Python code for all computations
 
-## 🔧 Technical Stack
+## 🔧 Technical Implementation
 
-- **Frontend**: Streamlit
+- **Framework**: Streamlit
 - **Statistics**: statsmodels, scipy, numpy
 - **Data Processing**: pandas
-- **Python Version**: 3.8+
+- **Python**: 3.8+
 
-## 🚀 Quick Start
+## 🚀 Getting Started
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/lilyle-2211/game_analytics_showcase.git
-   cd game_analytics_showcase
+   git clone https://github.com/lilyle-2211/analytics-dashboard-portfolio.git
+   cd analytics-dashboard-portfolio
    ```
 
 2. **Install dependencies**
@@ -37,79 +37,64 @@ A comprehensive analytics dashboard for game data analysis, featuring advanced A
    pip install -r requirements.txt
    ```
 
-3. **Run the application**
+3. **Launch the dashboard**
    ```bash
    streamlit run streamlit_app.py
    ```
 
-4. **Open your browser** to `http://localhost:8501`
+4. **Access the dashboard** at `http://localhost:8501`
 
-## 📊 A/B Testing Calculators
+## 📊 Statistical Capabilities
 
-### Features
-- **Z-test for Proportions**: Conversion rate and completion rate testing
-- **t-test for Continuous Metrics**: Revenue, engagement time, and other continuous variables
-- **Bonferroni Correction**: Proper multiple comparison adjustment for multi-variant tests
-- **Power Analysis**: Statistical power and sample size calculations
-- **Visual Code Display**: See the exact Python code used for calculations
+### Testing Methods
+- **Proportion Testing**: Conversion rates, completion rates, and binary outcomes
+- **Continuous Metrics**: Revenue, engagement time, and numerical variables
+- **Multiple Comparisons**: Bonferroni correction for multi-variant experiments
+- **Power Analysis**: Sample size and statistical power calculations
 
-### Statistical Methods
-- Uses `statsmodels.stats.power.NormalIndPower` for proportion tests
-- Uses `statsmodels.stats.power.TTestIndPower` for continuous metric tests
-- Implements proper Bonferroni correction: `α_adjusted = α / number_of_treatments`
-- Supports unequal allocation ratios between control and treatment groups
+### Implementation Details
+- `statsmodels.stats.power.NormalIndPower` for proportion tests
+- `statsmodels.stats.power.TTestIndPower` for continuous variables
+- Proper alpha adjustment: `α_adjusted = α / number_of_treatments`
+- Support for unequal group allocation ratios
 
-## 📁 Project Structure
+## 📁 Dashboard Structure
 
 ```
-game_analytics_showcase/
-├── streamlit_app.py              # Main application entry point
-├── dashboard/                    # Dashboard modules
-│   ├── tabs/                    # Individual tab implementations
-│   │   ├── abtest/             # A/B testing calculators
-│   │   ├── ltv/                # LTV analysis
-│   │   ├── engagement/         # Engagement metrics
-│   │   ├── acquisition/        # Acquisition analytics
-│   │   └── monetization/       # Monetization insights
-│   ├── components/             # Reusable UI components
-│   ├── config/                 # Configuration settings
-│   └── utils/                  # Utility functions
-├── requirements.txt            # Python dependencies
-└── README.md                  # This file
+analytics-dashboard-portfolio/
+├── streamlit_app.py              # Main application
+├── dashboard/                    # Core modules
+│   ├── tabs/                    # Feature modules
+│   │   ├── abtest/             # A/B testing tools
+│   │   ├── ltv/                # Lifetime value analysis
+│   │   ├── engagement/         # User engagement metrics
+│   │   ├── acquisition/        # User acquisition tracking
+│   │   └── monetization/       # Revenue optimization
+│   ├── components/             # UI components
+│   ├── config/                 # Configuration
+│   └── utils/                  # Helper functions
+└── requirements.txt            # Dependencies
 ```
 
-## 🎯 Use Cases
+## 🎯 Professional Applications
 
-- **Game Analytics Teams**: Comprehensive analytics for game performance
-- **Data Scientists**: Statistical testing and experimentation tools
-- **Product Managers**: Data-driven decision making dashboard
-- **Marketing Teams**: User acquisition and retention analysis
+- **Analytics Teams**: Comprehensive performance dashboards
+- **Data Scientists**: Statistical experimentation toolkit
+- **Product Teams**: Data-driven decision making
+- **Growth Teams**: Acquisition and retention optimization
 
-## 📈 Screenshots
+## � Portfolio Highlights
 
-The dashboard features:
-- Clean, professional interface with color-coded sections
-- Synchronized vertical alignment for easy comparison
-- Real-time calculations with parameter adjustments
-- Expandable Python code sections for transparency
-
-## 🤝 Contributing
-
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
+- **Clean Architecture**: Modular, maintainable code structure
+- **Statistical Rigor**: Proper implementation of testing methodologies
+- **Professional UI**: Intuitive interface with synchronized layouts
+- **Transparent Analysis**: Viewable calculation code for verification
 
 ## 📧 Contact
 
-For questions or suggestions, please open an issue or contact: where.ai.meets.roi@gmail.com
-
-## 📄 License
-
-This project is open source and available under the [MIT License](LICENSE).
+For inquiries: where.ai.meets.roi@gmail.com
 
 ---
 
-**Built with ❤️ for the analytics community**
-Comprehensive Game Analytics Dashboard with A/B Testing Sample Size Calculators - Built with Streamlit, featuring LTV analysis, engagement metrics, acquisition tracking, monetization insights, and advanced statistical testing tools using statsmodels
+**Professional Analytics Dashboard Portfolio**  
+*Demonstrating expertise in statistical analysis, data visualization, and dashboard development*
