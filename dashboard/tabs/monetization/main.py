@@ -5,15 +5,17 @@ import pandas as pd
 from dashboard.config.database import get_bigquery_data
 from dashboard.utils.ai_explainer import DashboardExplainer
 from dashboard.components.insights import render_manual_insights
-from .visualizations.charts import (
+from .charts import (
     render_iap_metrics,
     plot_iap_chart,
     render_ad_metrics,
     plot_ad_chart,
     plot_revenue_per_user_metrics,
+    render_revenue_per_user_metrics_boxes,
+    render_revenue_per_user_table,
     display_raw_data_section
 )
-from .insights.manual_insights import (
+from .manual_insights import (
     IAP_REVENUE_INSIGHTS,
     AD_REVENUE_INSIGHTS,
     REVENUE_PER_USER_INSIGHTS
@@ -54,7 +56,7 @@ def render_monetization_tab():
 def _render_iap_revenue_analysis(df, anomaly_df, explainer):
     """Render IAP revenue analysis section."""
     with st.container():
-        st.markdown("### US In-App Purchase Revenue")
+        st.markdown("### :blue[In-App Purchase Revenue]")
         
         # Create three columns: metrics, chart, and insights
         col_metrics, col_chart, col_insights = st.columns([1, 2, 1])
@@ -69,7 +71,7 @@ def _render_iap_revenue_analysis(df, anomaly_df, explainer):
             st.markdown("**Key Notes**")
             render_manual_insights(
                 IAP_REVENUE_INSIGHTS,
-                height=400,
+                height=350,
                 key_suffix="iap_revenue"
             )
 
@@ -77,7 +79,7 @@ def _render_iap_revenue_analysis(df, anomaly_df, explainer):
 def _render_ad_revenue_analysis(df, explainer):
     """Render ad revenue analysis section."""
     with st.container():
-        st.markdown("### US Advertisement Revenue")
+        st.markdown("### :blue[Advertisement Revenue]")
         
         # Create three columns: metrics, chart, and insights
         col_metrics, col_chart, col_insights = st.columns([1, 2, 1])
@@ -100,18 +102,22 @@ def _render_ad_revenue_analysis(df, explainer):
 def _render_revenue_per_user_analysis(df, anomaly_df):
     """Render revenue per user metrics analysis section."""
     with st.container():
-        st.markdown("### US Revenue Per User Metrics")
+        st.markdown("### :blue[Revenue Per User Metrics]")
         
-        # Create two columns: analysis on left, manual insights on right
-        col_analysis, col_manual = st.columns([2, 1])
+        # Create three columns: metrics boxes on left, table in middle, key notes on right
+        col_metrics, col_table, col_manual = st.columns([1, 2, 1])
         
-        with col_analysis:
-            plot_revenue_per_user_metrics(df, anomaly_df)
+        with col_metrics:
+            render_revenue_per_user_metrics_boxes(df, anomaly_df)
+        
+        with col_table:
+            st.markdown("#### Revenue Per User Metrics")
+            render_revenue_per_user_table(df, anomaly_df)
         
         with col_manual:
             st.markdown("**Key Notes**")
             render_manual_insights(
                 REVENUE_PER_USER_INSIGHTS,
-                height=600,
+                height=300,
                 key_suffix="revenue_per_user"
             )

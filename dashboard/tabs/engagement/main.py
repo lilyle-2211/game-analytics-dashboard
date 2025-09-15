@@ -3,16 +3,16 @@ import streamlit as st
 
 from dashboard.utils.ai_explainer import DashboardExplainer
 from dashboard.components.insights import render_manual_insights
-from .visualizations.charts import (
+from .charts import (
     plot_daily_active_users,
     plot_daily_engagement,
     plot_daily_return_rate, 
     plot_two_week_retention,
     plot_progression_milestones
 )
-from .insights.manual_insights import (
-    DAILY_ENGAGEMENT_INSIGHTS,
-    RETURN_RATE_INSIGHTS,
+from .manual_insights import (
+    DAILY_USER_METRICS,
+    DAILY_LEVEL_METRICS,
     TWO_WEEK_RETENTION_INSIGHTS,
     PROGRESSION_MILESTONES_INSIGHTS
 )
@@ -39,7 +39,7 @@ def render_engagement_tab():
 def _render_daily_engagement_analysis(explainer):
     """Render daily engagement metrics analysis."""
     with st.container():
-        st.markdown("### Daily Level Metrics")
+        st.markdown("### :blue[Daily Level Metrics]")
         
         # Create two columns: plot + AI on left, manual insights on right
         col_plot, col_manual = st.columns([2, 1])
@@ -50,7 +50,7 @@ def _render_daily_engagement_analysis(explainer):
         with col_manual:
             st.markdown("**Key Notes**")
             render_manual_insights(
-                DAILY_ENGAGEMENT_INSIGHTS,
+                DAILY_USER_METRICS,
                 height=300,
                 key_suffix="engagement"
             )
@@ -75,7 +75,7 @@ def _render_daily_return_rate_analysis(explainer):
         with col_manual:
             st.markdown("**Key Notes**")
             render_manual_insights(
-                RETURN_RATE_INSIGHTS,
+                DAILY_LEVEL_METRICS,
                 height=400,
                 key_suffix="return_rate"
             )
@@ -112,7 +112,7 @@ def _render_daily_return_rate_analysis(explainer):
 def _render_two_week_retention_analysis(explainer):
     """Render two-week retention analysis."""
     with st.container():
-        st.subheader("Two-Week Retention by Launch Phase")
+        st.markdown("### :blue[Two-Week Retention by Launch Phase]")
         
         # Create two columns: plot + AI on left, manual insights on right
         col_plot, col_manual = st.columns([2, 1])
@@ -132,7 +132,7 @@ def _render_two_week_retention_analysis(explainer):
 def _render_progression_milestone_analysis(explainer):
     """Render player progression milestone analysis."""
     with st.container():
-        st.markdown("### Player Progression Milestones")
+        st.markdown("### :blue[Player Progression Milestones]")
         
         # Create two columns: analysis on left, manual insights on right
         col_analysis, col_manual = st.columns([2, 1])
@@ -144,6 +144,6 @@ def _render_progression_milestone_analysis(explainer):
             st.markdown("**Key Notes**")
             render_manual_insights(
                 PROGRESSION_MILESTONES_INSIGHTS,
-                height=600,
+                height=300,
                 key_suffix="progression_milestones"
             )

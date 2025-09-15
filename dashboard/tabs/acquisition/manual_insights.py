@@ -45,7 +45,7 @@ Acquisition Success:
 
 Age Demographics:
 - Younger skew: Heaviest in ≤30 age group (~6k users)
-- Equal appeal across active adult segment (31-40, 41-50, 51-60)
+- Equal appeal across active adult segments (31-40, 41-50, 51-60)
 """
 
 

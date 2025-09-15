@@ -8,6 +8,10 @@ from dashboard.config.database import get_bigquery_data
 from dashboard.utils.ai_explainer import DashboardExplainer
 from .queries import REVENUE_SEGMENTATION_QUERY, RETENTION_RATE_QUERY
 from .data_processing import create_revenue_segmentation, create_segment_plot_data, create_retention_curve_data, project_90_day_ltv_simple
+from .manual_insights import (
+    REVENUE_SEGMENTATION_INSIGHTS,
+    RETENTION_RATE_INSIGHTS
+)
 
 
 def render_ltv_tab():
@@ -29,7 +33,24 @@ def render_ltv_tab():
     
     # Revenue Segmentation Analysis
     with st.container():
-        st.markdown("<h3 style='color: #0066cc;'>Revenue Segmentation Analysis</h3>", unsafe_allow_html=True)
+        # Create header with question mark popup
+        col_header, col_help = st.columns([6, 1])
+        with col_header:
+            st.markdown("<h3 style='color: #0066cc;'>Revenue Segmentation Analysis</h3>", unsafe_allow_html=True)
+        with col_help:
+            with st.popover("❓"):
+                st.markdown("**Spender Quantile Segmentation Explained:**")
+                st.markdown("""
+                - **Low Spender (25%)**: Bottom 25% of paying users by revenue
+                - **Medium Spender (50%)**: 25th-50th percentile of paying users  
+                - **High Spender (75%)**: 50th-75th percentile of paying users
+                - **Premium (90%)**: 75th-90th percentile of paying users
+                - **VIP (95%)**: 90th-95th percentile of paying users
+                - **Whale (95%+)**: Top 5% of paying users by revenue
+                
+                Segments are based on 20-day cumulative revenue quantiles among paying users only.
+                """)
+        
         
         try:
             if revenue_df is not None and not revenue_df.empty:
@@ -41,22 +62,22 @@ def render_ltv_tab():
                     col_charts, col_insights = st.columns([3, 1])
                     
                     with col_charts:
-                        # Define segment order with quantile information (excluding Non-Payer)
+                        # Define segment order without percent signs
                         segment_order = [
-                            'Low Spender (25%)', 'Medium Spender (50%)', 
-                            'High Spender (75%)', 'Premium (90%)', 'VIP (95%)', 
-                            'Whale (95%+)'
+                            'Low Spender', 'Medium Spender', 
+                            'High Spender', 'Premium', 'VIP', 
+                            'Whale'
                         ]
                         
-                        # Add quantile info to segment names
+                        # Add quantile info to segment names for display (without % in segment names)
                         segmentation_display = segmentation_table.copy()
                         segment_mapping = {
-                            'Low Spender': 'Low Spender (25%)',
-                            'Medium Spender': 'Medium Spender (50%)',
-                            'High Spender': 'High Spender (75%)',
-                            'Premium': 'Premium (90%)',
-                            'VIP': 'VIP (95%)',
-                            'Whale': 'Whale (95%+)'
+                            'Low Spender': 'Low Spender',
+                            'Medium Spender': 'Medium Spender',
+                            'High Spender': 'High Spender',
+                            'Premium': 'Premium',
+                            'VIP': 'VIP',
+                            'Whale': 'Whale'
                         }
                         segmentation_display['segment_display'] = segmentation_display['segment'].map(segment_mapping)
                         
@@ -78,18 +99,18 @@ def render_ltv_tab():
                         )
                         segmentation_display_filtered = segmentation_display_filtered.sort_values('segment_order')
                         segmentation_display['segment_order'] = segmentation_display['segment_display'].map(
-                            {seg: i for i, seg in enumerate(['Non-Payer (0%)'] + segment_order)}
+                            {seg: i for i, seg in enumerate(['Non-Payer'] + segment_order)}
                         )
                         segmentation_display = segmentation_display.sort_values('segment_order')
                         
                         # Add importance weight for color scaling (higher value segments get darker colors)
                         importance_mapping = {
-                            'Low Spender (25%)': 1,
-                            'Medium Spender (50%)': 2,
-                            'High Spender (75%)': 3,
-                            'Premium (90%)': 4,
-                            'VIP (95%)': 5,
-                            'Whale (95%+)': 6
+                            'Low Spender': 1,
+                            'Medium Spender': 2,
+                            'High Spender': 3,
+                            'Premium': 4,
+                            'VIP': 5,
+                            'Whale': 6
                         }
                         segmentation_display_filtered['importance'] = segmentation_display_filtered['segment_display'].map(importance_mapping)
                         
@@ -102,7 +123,7 @@ def render_ltv_tab():
                                 segmentation_display_filtered,
                                 x='segment_display',
                                 y='user_pct',
-                                title="Number of Users by Segment (%) - Paying Users Only",
+                                title="Number of Payers (IAP + AD) Users / DAU by Segment (%)",
                                 labels={
                                     "segment_display": "",
                                     "user_pct": "Percentage of Users (%)"
@@ -139,7 +160,7 @@ def render_ltv_tab():
                     with col_insights:
                         st.markdown("**Key Notes**")
                         render_manual_insights(
-                            "• High-value segment analysis\n• Revenue concentration patterns\n• Segment growth opportunities\n• Monetization optimization",
+                            REVENUE_SEGMENTATION_INSIGHTS,
                             height=400,
                             key_suffix="segmentation"
                         )
@@ -214,7 +235,7 @@ def render_ltv_tab():
                     with col_insights:
                         st.markdown("**Key Notes**")
                         render_manual_insights(
-                            "• Weibull model projection accuracy\n• 90-day retention forecasts\n• Critical retention drop points\n• Long-term engagement strategies\n• Model parameter interpretation",
+                            RETENTION_RATE_INSIGHTS,
                             height=300,
                             key_suffix="retention"
                         )
@@ -251,7 +272,7 @@ def render_ltv_tab():
                             )
                     
                     # 90-Day LTV Projection Table
-                    st.subheader("90-Day LTV Projection by Segment")
+                    st.markdown("### :blue[90-Day LTV Projection by Segment]")
                     
                     st.markdown("""
                     **How 90-day projection is calculated:**

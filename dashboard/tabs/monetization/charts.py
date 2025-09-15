@@ -7,7 +7,7 @@ import streamlit as st
 from dashboard.config.database import get_bigquery_data
 from dashboard.utils.ai_explainer import DashboardExplainer
 from dashboard.components.insights import render_ai_insights
-from ..queries import REVENUE_BY_SOURCE_QUERY, ANOMALY_TRANSACTIONS_QUERY
+from .queries import REVENUE_BY_SOURCE_QUERY
 
 
 def render_iap_metrics(df, anomaly_df):
@@ -39,8 +39,11 @@ def render_iap_metrics(df, anomaly_df):
             delta=f"-${anomaly_iap:,.2f}",
             delta_color="off"
         )
-    
-    st.metric("Percent of Total", f"{total_iap/total_rev:.1%}")
+        # Use adjusted IAP for percentage when anomalies are excluded
+        st.metric("Percent of Total", f"{adjusted_iap/(adjusted_iap + total_ad):.1%}")
+    else:
+        # Use total IAP when no anomalies
+        st.metric("Percent of Total", f"{total_iap/total_rev:.1%}")
     
     return total_iap, anomaly_iap, anomaly_count
 
@@ -221,6 +224,65 @@ def plot_revenue_per_user_metrics(df, anomaly_df):
     st.dataframe(display_df, use_container_width=True)
     
     return table_data
+
+
+def render_revenue_per_user_metrics_boxes(df, anomaly_df):
+    """Render just the metrics boxes for revenue per user."""
+    # Calculate anomaly metrics
+    if not anomaly_df.empty and 'revenue_type' in anomaly_df.columns:
+        anomaly_iap = anomaly_df[anomaly_df['revenue_type'] == 'iap']['transaction_value'].sum()
+        anomaly_count = len(anomaly_df[anomaly_df['revenue_type'] == 'iap'])
+    else:
+        anomaly_iap = 0
+        anomaly_count = 0
+    
+    # Get unique user counts from REVENUE_BY_SOURCE_QUERY data (same value in all rows)
+    unique_active_users = df['total_unique_active_users'].iloc[0]
+    unique_iap_users = df['total_unique_paying_users_iap'].iloc[0]  # IAP-only users
+    unique_iap_ad_users = df['total_unique_paying_users_all'].iloc[0]  # All revenue users (IAP + AD)
+    
+    # Calculate IAP user conversion rate (IAP users / total active users)
+    iap_conversion_rate = unique_iap_users / unique_active_users if unique_active_users > 0 else 0
+    
+    # Calculate Average Revenue Per User (ARPU) across all days
+    avg_arpu = df['total_arpdau'].mean()
+    
+    # Display metrics vertically
+    st.metric("Unique IAP Users", f"{unique_iap_users:,}")
+    st.metric("Unique IAP + AD Users", f"{unique_iap_ad_users:,}")
+    st.metric("% IAP Users/DAU", f"{iap_conversion_rate:.2%}")
+    st.metric("Average Revenue Per User (ARPU)", f"${avg_arpu:.4f}")
+
+
+def render_revenue_per_user_table(df, anomaly_df):
+    """Render just the table for revenue per user metrics."""
+    # Prepare the table data
+    table_data = df.copy()
+    table_data['revenue_date'] = table_data['revenue_date'].dt.date
+    
+    # Select only the requested columns: date | DAU | Revenue (iap + ad) | ARPDAU
+    table_columns = [
+        'revenue_date', 
+        'DAU',
+        'total_revenue',
+        'total_arpdau'
+    ]
+    
+    # Create display dataframe with only requested columns
+    display_df = table_data[table_columns].rename(columns={
+        'revenue_date': 'Date',
+        'DAU': 'DAU',
+        'total_revenue': 'Revenue (IAP + AD)',
+        'total_arpdau': 'ARPDAU'
+    })
+    
+    # Format numeric columns
+    display_df['Revenue (IAP + AD)'] = display_df['Revenue (IAP + AD)'].map('${:,.2f}'.format)
+    display_df['ARPDAU'] = display_df['ARPDAU'].map('${:,.4f}'.format)
+    display_df['DAU'] = display_df['DAU'].map('{:,}'.format)
+    
+    # Display the table
+    st.dataframe(display_df, use_container_width=True)
 
 
 def display_raw_data_section(df, anomaly_df):

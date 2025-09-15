@@ -8,7 +8,7 @@ import streamlit as st
 from dashboard.config.database import get_bigquery_data
 from dashboard.utils.ai_explainer import DashboardExplainer
 from dashboard.components.insights import render_ai_insights
-from ..queries import DAILY_ENGAGEMENT_QUERY, DAILY_RETURN_RATE_QUERY, TWO_WEEK_RETENTION_QUERY, PROGRESSION_MILESTONE_QUERY
+from .queries import DAILY_ENGAGEMENT_QUERY, DAILY_RETURN_RATE_QUERY, TWO_WEEK_RETENTION_QUERY, PROGRESSION_MILESTONE_QUERY
 
 
 def plot_daily_active_users(explainer):

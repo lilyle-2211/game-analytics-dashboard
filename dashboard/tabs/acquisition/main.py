@@ -3,13 +3,13 @@ import streamlit as st
 
 from dashboard.utils.ai_explainer import DashboardExplainer
 from dashboard.components.insights import render_manual_insights
-from dashboard.tabs.acquisition.data_processing.processor import load_and_process_acquisition_data, display_raw_data_sample
-from dashboard.tabs.acquisition.visualizations.charts import (
+from dashboard.tabs.acquisition.processor import load_and_process_acquisition_data, display_raw_data_sample
+from dashboard.tabs.acquisition.charts import (
     plot_timeseries, 
     plot_weekly_patterns, 
     plot_demographics
 )
-from dashboard.tabs.acquisition.insights.manual_insights import (
+from dashboard.tabs.acquisition.manual_insights import (
     TIMESERIES_INSIGHTS,
     WEEKLY_PATTERNS_INSIGHTS,
     DEMOGRAPHICS_INSIGHTS
