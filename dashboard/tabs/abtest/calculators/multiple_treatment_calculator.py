@@ -342,19 +342,5 @@ def render_multiple_treatment_results():
                 help="Test duration in days",
             )
 
-        # Add Python code section
-        from .code_generators import render_multiple_treatment_python_code
-
-        with st.expander("📋 Python Code", expanded=False):
-            render_multiple_treatment_python_code(
-                multi_params,
-                sample_size_control,
-                sample_size_per_treatment,
-                total_sample,
-                duration,
-                alpha_adjusted,
-                correction_label,
-            )
-
     except Exception as e:
         st.error(f"Error calculating multiple treatment sample size: {str(e)}")

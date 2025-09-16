@@ -284,17 +284,5 @@ def render_ab_test_results():
                 help="Test duration in days",
             )
 
-        # Add Python code section
-        from .code_generators import render_ab_test_python_code
-
-        with st.expander("📋 Python Code", expanded=False):
-            render_ab_test_python_code(
-                ab_params,
-                sample_size_control,
-                sample_size_treatment,
-                total_sample,
-                duration,
-            )
-
     except Exception as e:
         st.error(f"Error calculating A/B test sample size: {str(e)}")
