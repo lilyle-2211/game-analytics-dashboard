@@ -16,7 +16,6 @@ def render_ab_test_python_code(
         current_rate = ab_params.get("current_rate", 0.15)
         mde = ab_params.get("mde", 0.02)
         new_rate = current_rate + mde
-
         st.code(
             f"""
 # A/B Test Sample Size Calculation (Z-test for proportions)
@@ -24,22 +23,22 @@ import numpy as np
 from statsmodels.stats.power import NormalIndPower
 from statsmodels.stats.proportion import proportion_effectsize
 
-    # Parameters
-    current_rate = {current_rate:.3f}  # {current_rate * 100:.1f}%
-    new_rate = {new_rate:.3f}  # {new_rate * 100:.1f}%
-    mde = {mde:.3f}  # {mde * 100:.1f} percentage points
-    power = {power:.2f}
-    alpha = {alpha:.3f}
-    treatment_allocation = {treatment_size:.1f}  # {treatment_size * 100:.0f}% treatment, {(1 - treatment_size) * 100:.0f}% control
-    daily_users = {daily_users}
+# Parameters
+current_rate = {current_rate:.3f}  # {current_rate * 100:.1f}%
+new_rate = {new_rate:.3f}  # {new_rate * 100:.1f}%
+mde = {mde:.3f}  # {mde * 100:.1f} percentage points
+power = {power:.2f}
+alpha = {alpha:.3f}
+treatment_allocation = {treatment_size:.1f}  # {treatment_size * 100:.0f}% treatment, {(1 - treatment_size) * 100:.0f}% control
+daily_users = {daily_users}
 
-    # Calculate effect size (Cohen's h for proportions)
-    effect_size = proportion_effectsize(new_rate, current_rate)
-    print(f"Effect size (Cohen's h): {effect_size:.4f}")
+# Calculate effect size (Cohen's h for proportions)
+effect_size = proportion_effectsize(new_rate, current_rate)
+print(f"Effect size (Cohen's h): {{effect_size:.4f}}")
 
-    # Calculate allocation ratio
-    allocation_ratio = treatment_allocation / (1 - treatment_allocation)
-    print(f"Allocation ratio: {allocation_ratio:.3f}")
+# Calculate allocation ratio
+allocation_ratio = treatment_allocation / (1 - treatment_allocation)
+print(f"Allocation ratio: {{allocation_ratio:.3f}}")
 
 # Sample size calculation
 power_analysis = NormalIndPower()
@@ -70,12 +69,10 @@ print(f"Test duration: {{int(duration)}} days ({{duration/7:.1f}} weeks)")
 """,
             language="python",
         )
-
     else:  # t-test
         current_mean = ab_params.get("current_mean", 100.0)
         std_dev = ab_params.get("std_dev", 20.0)
         effect_size_input = ab_params.get("effect_size_input", 5.0)
-
         st.code(
             f"""
 # A/B Test Sample Size Calculation (t-test for continuous metrics)
@@ -131,13 +128,7 @@ print(f"Test duration: {{int(duration)}} days ({{duration/7:.1f}} weeks)")
 
 
 def render_multiple_treatment_python_code(
-    multi_params,
-    sample_size_control,
-    sample_size_per_treatment,
-    total_sample,
-    duration,
-    alpha_adjusted,
-    correction_label,
+    multi_params, sample_size_control, sample_size_per_treatment, total_sample, duration
 ):
     """Render Python code for multiple treatment test calculations."""
     test_metric = multi_params.get("test_metric", "Z-test (proportion)")
@@ -148,21 +139,21 @@ def render_multiple_treatment_python_code(
     treatment_allocation = multi_params.get("treatment_allocation", 0.75)
     daily_users = multi_params.get("daily_users", 1000)
 
+    if "Bonferroni" in correction_method:
+        correction_code = (
+            "alpha_adjusted = alpha / num_treatments  # Bonferroni correction"
+        )
+        alpha_label = "Bonferroni adjusted alpha"
+    else:
+        correction_code = (
+            "# FDR (Benjamini-Hochberg): alpha_adjusted = alpha (applied post-hoc)"
+        )
+        alpha_label = "FDR (B-H) alpha"
+
     if "Z-test" in test_metric:
         current_rate = multi_params.get("current_rate", 0.15)
         mde = multi_params.get("mde", 0.02)
         new_rate = current_rate + mde
-
-        # Generate correction method code
-        if "Bonferroni" in correction_method:
-            correction_code = (
-                f"alpha_adjusted = alpha / num_treatments  # Bonferroni correction"
-            )
-        else:
-            correction_code = f"""# False Discovery Rate (Benjamini-Hochberg) correction
-# For sample size calculation, we use a conservative approximation
-alpha_adjusted = alpha"""
-
         st.code(
             f"""
 # Multiple Treatment Test Sample Size Calculation (Z-test for proportions)
@@ -171,9 +162,9 @@ from statsmodels.stats.power import NormalIndPower
 from statsmodels.stats.proportion import proportion_effectsize
 
 # Parameters
-current_rate = {current_rate:.3f}  # {current_rate*100:.1f}%
-new_rate = {new_rate:.3f}  # {new_rate*100:.1f}%
-mde = {mde:.3f}  # {mde*100:.1f} percentage points
+current_rate = {current_rate:.3f}  # {current_rate * 100:.1f}%
+new_rate = {new_rate:.3f}  # {new_rate * 100:.1f}%
+mde = {mde:.3f}  # {mde * 100:.1f} percentage points
 power = {power:.2f}
 alpha = {alpha:.3f}
 num_treatments = {num_treatments}
@@ -182,28 +173,22 @@ daily_users = {daily_users}
 
 # {correction_method} for multiple comparisons
 {correction_code}
-print(f"Original alpha: {{alpha:.3f}}")
-print(f"{correction_label} adjusted alpha: {{alpha_adjusted:.4f}}")
 
 # Calculate effect size (Cohen's h for proportions)
 effect_size = proportion_effectsize(new_rate, current_rate)
 print(f"Effect size (Cohen's h): {{effect_size:.4f}}")
 
-# Calculate allocation ratios
-treatment_per_group = treatment_allocation / num_treatments
+# Calculate allocation ratio per group
 control_allocation = 1 - treatment_allocation
-allocation_ratio = treatment_per_group / control_allocation
+allocation_ratio = (treatment_allocation / num_treatments) / control_allocation
+print(f"Allocation ratio per group: {{allocation_ratio:.3f}}")
 
-print(f"Control allocation: {{control_allocation:.2f}}")
-print(f"Per treatment allocation: {{treatment_per_group:.3f}}")
-print(f"Allocation ratio: {{allocation_ratio:.3f}}")
-
-# Sample size calculation with correction
+# Sample size calculation
 power_analysis = NormalIndPower()
 sample_size_control = power_analysis.solve_power(
     effect_size=effect_size,
     power=power,
-    alpha=alpha_adjusted,  # Using adjusted alpha
+    alpha=alpha,  # Use alpha_adjusted for Bonferroni
     alternative='two-sided',
     ratio=allocation_ratio
 )
@@ -218,7 +203,7 @@ print(f"Total sample size: {{total_sample:,}}")
 
 # Duration calculation
 control_users_per_day = daily_users * control_allocation
-treatment_users_per_day_per_group = daily_users * treatment_per_group
+treatment_users_per_day_per_group = daily_users * (treatment_allocation / num_treatments)
 days_for_control = np.ceil(sample_size_control / control_users_per_day)
 days_for_treatment = np.ceil(sample_size_per_treatment / treatment_users_per_day_per_group)
 duration = max(days_for_control, days_for_treatment)
@@ -227,22 +212,10 @@ print(f"Test duration: {{int(duration)}} days ({{duration/7:.1f}} weeks)")
 """,
             language="python",
         )
-
     else:  # t-test
         current_mean = multi_params.get("current_mean", 100.0)
         std_dev = multi_params.get("std_dev", 20.0)
         effect_size_input = multi_params.get("effect_size_input", 5.0)
-
-        # Generate correction method code
-        if "Bonferroni" in correction_method:
-            correction_code = (
-                f"alpha_adjusted = alpha / num_treatments  # Bonferroni correction"
-            )
-        else:
-            correction_code = f"""# False Discovery Rate (Benjamini-Hochberg) correction
-# For sample size calculation, we use a conservative approximation
-alpha_adjusted = alpha"""
-
         st.code(
             f"""
 # Multiple Treatment Test Sample Size Calculation (t-test for continuous metrics)
@@ -261,28 +234,22 @@ daily_users = {daily_users}
 
 # {correction_method} for multiple comparisons
 {correction_code}
-print(f"Original alpha: {{alpha:.3f}}")
-print(f"{correction_label} adjusted alpha: {{alpha_adjusted:.4f}}")
 
 # Calculate Cohen's d
 cohens_d = effect_size / std_dev
 print(f"Cohen's d: {{cohens_d:.4f}}")
 
-# Calculate allocation ratios
-treatment_per_group = treatment_allocation / num_treatments
+# Calculate allocation ratio per group
 control_allocation = 1 - treatment_allocation
-allocation_ratio = treatment_per_group / control_allocation
+allocation_ratio = (treatment_allocation / num_treatments) / control_allocation
+print(f"Allocation ratio per group: {{allocation_ratio:.3f}}")
 
-print(f"Control allocation: {{control_allocation:.2f}}")
-print(f"Per treatment allocation: {{treatment_per_group:.3f}}")
-print(f"Allocation ratio: {{allocation_ratio:.3f}}")
-
-# Sample size calculation with correction
+# Sample size calculation
 power_analysis = TTestIndPower()
 sample_size_control = power_analysis.solve_power(
     effect_size=cohens_d,
     power=power,
-    alpha=alpha_adjusted,  # Using adjusted alpha
+    alpha=alpha,  # Use alpha_adjusted for Bonferroni
     alternative='two-sided',
     ratio=allocation_ratio
 )
@@ -297,7 +264,7 @@ print(f"Total sample size: {{total_sample:,}}")
 
 # Duration calculation
 control_users_per_day = daily_users * control_allocation
-treatment_users_per_day_per_group = daily_users * treatment_per_group
+treatment_users_per_day_per_group = daily_users * (treatment_allocation / num_treatments)
 days_for_control = np.ceil(sample_size_control / control_users_per_day)
 days_for_treatment = np.ceil(sample_size_per_treatment / treatment_users_per_day_per_group)
 duration = max(days_for_control, days_for_treatment)
