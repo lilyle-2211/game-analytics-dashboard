@@ -77,13 +77,15 @@ def main():
     with st.expander("❓ How to use this dashboard", expanded=False):
         st.markdown(
             """
+            This interactive dashboard showcases key analytics for a mobile game. It uses synthetic data that is queried from BigQuery and visualized with Streamlit and Plotly.
+
             **How to use this dashboard:**
 
             - **Tabs:** Click the tabs at the top to explore different analytics areas: Acquisition, Engagement, Monetisation, A/B Test, LTV, and Contact.
             - **AI Analysis:** In each analytics tab, click the 'AI Analysis' button to see AI-generated insights for the current plot.
             - **SQL Code Example:** Click the 'SQL Code Example' expanders to view example queries used to generate the data for each analysis and data sample.
             - **Key Notes:** Curated commentary for key insights and takeaways.
-            - **Contact:** Use the Contact tab to find my email, LinkedIn, and GitHub for questions or collaboration.
+            - **Contact Me:** Use the Contact tab to find my email, LinkedIn, and GitHub for questions or collaboration.
 
             _Tip: You can toggle AI features on/off at the bottom right._
             """
