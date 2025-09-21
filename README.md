@@ -43,8 +43,6 @@ analytics-dashboard-portfolio/
 │   ├── monetization_1-2.sql      # Revenue and anomaly detection
 │   └── ltv_1-4.sql              # LTV analysis queries
 ├── ml/                           # Machine learning models
-├── notebook/                     # Jupyter notebooks
-│   └── Tactile_DataAnalyst_Assignment.ipynb  # Data analysis notebook
 ├── data/                         # Sample datasets
 └── requirements.txt              # Dependencies
 ```
