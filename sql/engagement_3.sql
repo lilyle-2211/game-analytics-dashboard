@@ -7,7 +7,7 @@ WITH user_installs AS (
     u.user_id,
     REGEXP_EXTRACT(u.user_id, r'_(\d+)') as numeric_user_id,
     DATE(SAFE.PARSE_TIMESTAMP('%Y-%m-%dT%H:%M:%E*SZ', u.install_date)) as install_date
-  FROM `tactile-471816.data_analyst_test_local.users` u
+  FROM `game-analytics.data_analyst_test_local.users` u
   WHERE u.install_date IS NOT NULL
     AND DATE(SAFE.PARSE_TIMESTAMP('%Y-%m-%dT%H:%M:%E*SZ', u.install_date)) >= '2020-01-01'
     AND DATE(SAFE.PARSE_TIMESTAMP('%Y-%m-%dT%H:%M:%E*SZ', u.install_date)) <= CURRENT_DATE()
@@ -16,7 +16,7 @@ user_activity AS (
   SELECT
     CAST(a.user_id AS STRING) as numeric_user_id,
     a.date as activity_date
-  FROM `tactile-471816.data_analyst_test_local.activity` a
+  FROM `game-analytics.data_analyst_test_local.activity` a
   WHERE a.date IS NOT NULL AND a.user_id IS NOT NULL
 ),
 two_week_retention AS (

@@ -5,7 +5,7 @@
 WITH all_users AS (
   SELECT
     COUNT(DISTINCT user_id) as unique_users_count
-  FROM `tactile-471816.data_analyst_test_local.activity`
+  FROM `game-analytics.data_analyst_test_local.activity`
   WHERE date IS NOT NULL AND date >='2022-06-06' AND user_id IS NOT NULL
 ),
 user_daily_activity AS (
@@ -13,7 +13,7 @@ user_daily_activity AS (
     user_id,
     date,
     LAG(date) OVER (PARTITION BY user_id ORDER BY date) as prev_date,
-  FROM `tactile-471816.data_analyst_test_local.activity`
+  FROM `game-analytics.data_analyst_test_local.activity`
   WHERE date IS NOT NULL AND date >='2022-06-06' AND user_id IS NOT NULL
 ),
 daily_returns AS (

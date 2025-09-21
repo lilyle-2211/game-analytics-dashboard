@@ -28,7 +28,7 @@ SELECT
   END AS age_group,
   count(DISTINCT user_id) as num_player,
   count(*) as num_device
-FROM `tactile-471816.data_analyst_test_local.users`
+FROM `game-analytics.data_analyst_test_local.users`
 WHERE DATE(SAFE.PARSE_TIMESTAMP('%Y-%m-%dT%H:%M:%E*SZ', install_date)) >= '2020-01-01'
   AND DATE(SAFE.PARSE_TIMESTAMP('%Y-%m-%dT%H:%M:%E*SZ', install_date)) <= CURRENT_DATE()
 GROUP BY 1, 2, 3, 4, 5, 6, 7

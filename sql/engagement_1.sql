@@ -7,7 +7,7 @@ SELECT
   COUNT(DISTINCT user_id) as daily_active_users,
   SUM(levels_played) as total_levels_played,
   SUM(levels_completed) as total_levels_completed
-FROM `tactile-471816.data_analyst_test_local.activity`
+FROM `game-analytics.data_analyst_test_local.activity`
 WHERE date IS NOT NULL and date >='2022-06-06'
 GROUP BY date
 ORDER BY date

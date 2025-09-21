@@ -130,9 +130,9 @@ def plot_daily_engagement(explainer):
             st.plotly_chart(fig3, use_container_width=True)
 
         # Display raw data sample and SQL query
-        with st.expander("📋 Raw Data Sample & SQL Query", expanded=False):
+        with st.expander("📋 SQL Query & Data Sample", expanded=False):
             st.markdown(
-                "**Data Source:** `tactile-471816.data_analyst_test_local.activity`"
+                "**Data Source:** `game-analytics.data_analyst_test_local.activity`"
             )
             st.markdown("**SQL Query:**")
             st.code(DAILY_ENGAGEMENT_QUERY, language="sql")
@@ -240,7 +240,7 @@ def plot_two_week_retention(explainer):
         # Display SQL query
         with st.expander("📋 SQL Query", expanded=False):
             st.markdown(
-                "**Data Sources:** `tactile-471816.data_analyst_test_local.users`, `tactile-471816.data_analyst_test_local.activity`"
+                "**Data Sources:** `game-analytics.data_analyst_test_local.users`, `game-analytics.data_analyst_test_local.activity`"
             )
             st.markdown("**SQL Query:**")
             st.code(TWO_WEEK_RETENTION_QUERY, language="sql")
@@ -298,9 +298,9 @@ def plot_progression_milestones(explainer):
         # Plot removed - showing table only
 
         # Display raw data sample and SQL query
-        with st.expander("📋 Raw Data Sample & SQL Query", expanded=False):
+        with st.expander("📋 SQL Query & Data Sample", expanded=False):
             st.markdown(
-                "**Data Source:** `tactile-471816.data_analyst_test_local.activity`"
+                "**Data Source:** `game-analytics.data_analyst_test_local.activity`"
             )
             st.markdown("**SQL Query:**")
             st.code(PROGRESSION_MILESTONE_QUERY, language="sql")

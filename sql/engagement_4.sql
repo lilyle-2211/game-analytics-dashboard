@@ -8,7 +8,7 @@ WITH user_level_progression AS (
     date,
     max_level_completed,
     ROW_NUMBER() OVER (PARTITION BY user_id, max_level_completed ORDER BY date) as rn
-  FROM `tactile-471816.data_analyst_test_local.activity`
+  FROM `game-analytics.data_analyst_test_local.activity`
   WHERE date IS NOT NULL
     AND date >= '2022-06-06'
     AND user_id IS NOT NULL
@@ -26,7 +26,7 @@ user_first_activity AS (
   SELECT
     user_id,
     MIN(date) as first_active_date
-  FROM `tactile-471816.data_analyst_test_local.activity`
+  FROM `game-analytics.data_analyst_test_local.activity`
   WHERE date IS NOT NULL
     AND date >= '2022-06-06'
     AND user_id IS NOT NULL
@@ -37,7 +37,7 @@ user_max_levels AS (
     user_id,
     MIN(date) as first_active_date,
     MAX(max_level_completed) as highest_level_reached
-  FROM `tactile-471816.data_analyst_test_local.activity`
+  FROM `game-analytics.data_analyst_test_local.activity`
   WHERE date IS NOT NULL
     AND date >= '2022-06-06'
     AND user_id IS NOT NULL

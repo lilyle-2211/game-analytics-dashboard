@@ -304,9 +304,9 @@ def render_revenue_per_user_table(df, anomaly_df):
 
 def display_raw_data_section(df, anomaly_df):
     """Display raw data and SQL query section."""
-    with st.expander("📋 Raw Data & SQL Query", expanded=False):
+    with st.expander("📋 SQL Query & Data Sample", expanded=False):
         st.markdown(
-            "**Data Source:** `tactile-471816.data_analyst_test_local.revenues`"
+            "**Data Source:** `game-analytics.data_analyst_test_local.revenues`"
         )
         st.markdown("**SQL Query:**")
         st.code(REVENUE_BY_SOURCE_QUERY, language="sql")

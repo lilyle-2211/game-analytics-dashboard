@@ -294,6 +294,21 @@ def render_ltv_tab():
                     with st.expander(
                         "Retention Rate Data - Actual vs Projected", expanded=False
                     ):
+                        st.markdown(
+                            """
+                            **How is the projected retention rate calculated?**
+
+                            - **Projection method:**
+                                1. Fit a Weibull curve to the actual retention data from Days 1-20.
+                                2. Use the fitted curve to estimate retention for Days 21-90.
+                                3. Apply a conservative decay adjustment for days beyond 20 (an extra 15% decay per 10 days) to avoid overestimating long-term retention.
+
+
+                            - **Why Weibull?**
+                                1. The Weibull model is commonly used for survival analysis. In game analytics, it can flexibly fit both the sharp early drop and the slower long-term decline seen in commonly real user data. This makes projections more realistic than a simple straight-line or exponential fit.
+                                2. [Weibull distribution: Wikipedia](https://en.wikipedia.org/wiki/Weibull_distribution)
+                            """
+                        )
                         # Create table view of the data
                         table_data = retention_curve_data.pivot(
                             index="day", columns="type", values="retention_rate"
@@ -419,8 +434,8 @@ def render_ltv_tab():
                     hide_index=True,
                 )
 
-    # SQL Code Example & Sample Data (moved to bottom)
-    with st.expander("SQL Code Example & Sample Data", expanded=False):
+    # SQL Query & Data Sample (moved to bottom)
+    with st.expander("SQL Query & Data Sample", expanded=False):
         col1, col2 = st.columns(2)
 
         with col1:

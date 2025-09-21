@@ -7,7 +7,7 @@ WITH transaction_stats AS (
     revenue_type,
     AVG(transaction_value) AS avg_transaction,
     AVG(transaction_value) * 100 AS threshold_100x -- 100x average threshold
-  FROM `tactile-471816.data_analyst_test_local.revenues`
+  FROM `game-analytics.data_analyst_test_local.revenues`
   WHERE transaction_value > 0 AND eventDate >= '2022-06-06'
   GROUP BY revenue_type
 )
@@ -19,7 +19,7 @@ SELECT
   t.transaction_value,
   s.avg_transaction,
   ROUND(t.transaction_value / s.avg_transaction, 1) AS times_avg
-FROM `tactile-471816.data_analyst_test_local.revenues` t
+FROM `game-analytics.data_analyst_test_local.revenues` t
 JOIN transaction_stats s ON t.revenue_type = s.revenue_type
 WHERE
   (t.transaction_value > s.threshold_100x) AND eventDate >= '2022-06-06'
@@ -35,7 +35,7 @@ WITH filtered_revenue AS (
     revenue_type,
     user_id,
     transaction_value
-  FROM `tactile-471816.data_analyst_test_local.revenues`
+  FROM `game-analytics.data_analyst_test_local.revenues`
   WHERE
     eventDate >= '2022-06-06'
     AND eventDate IS NOT NULL
@@ -48,7 +48,7 @@ activity_data AS (
   SELECT
     date,
     COUNT(DISTINCT user_id) AS DAU
-  FROM `tactile-471816.data_analyst_test_local.activity`
+  FROM `game-analytics.data_analyst_test_local.activity`
   WHERE date >= '2022-06-06'
   GROUP BY date
 ),
@@ -58,7 +58,7 @@ overall_totals AS (
     COUNT(DISTINCT CASE WHEN a.date IS NOT NULL THEN a.user_id END) AS total_unique_active_users,
     COUNT(DISTINCT CASE WHEN r.revenue_type = 'iap' THEN r.user_id END) AS total_unique_paying_users_iap,
     COUNT(DISTINCT CASE WHEN r.user_id IS NOT NULL THEN r.user_id END) AS total_unique_paying_users_all
-  FROM `tactile-471816.data_analyst_test_local.activity` a
+  FROM `game-analytics.data_analyst_test_local.activity` a
   FULL OUTER JOIN filtered_revenue r ON a.user_id = r.user_id
   WHERE (a.date >= '2022-06-06' OR a.date IS NULL)
 ),

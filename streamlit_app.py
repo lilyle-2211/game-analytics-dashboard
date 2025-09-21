@@ -64,13 +64,31 @@ def main():
     # Initialize AI explainer for status check
     explainer = DashboardExplainer()
 
-    # Top right creator name
+    # Top right creator name with expandable help
     col_spacer, col_creator = st.columns([6, 2])
     with col_creator:
         st.markdown(
-            "<div style='text-align: right;'>Creator: Lily Le</div>",
+            "<div style='text-align: right; font-weight: 500;'>Creator: Lily Le</div>",
             unsafe_allow_html=True,
         )
+
+    # Help expander below creator name, expands up-down
+    st.markdown("<div style='text-align: right;'>", unsafe_allow_html=True)
+    with st.expander("❓ How to use this dashboard", expanded=False):
+        st.markdown(
+            """
+            **How to use this dashboard:**
+
+            - **Tabs:** Click the tabs at the top to explore different analytics areas: Acquisition, Engagement, Monetisation, A/B Test, LTV, and Contact.
+            - **AI Analysis:** In each analytics tab, click the 'AI Analysis' button to see AI-generated insights for the current plot.
+            - **SQL Code Example:** Click the 'SQL Code Example' expanders to view example queries used to generate the data for each analysis and data sample.
+            - **Key Notes:** Curated commentary for key insights and takeaways.
+            - **Contact:** Use the Contact tab to find my email, LinkedIn, and GitHub for questions or collaboration.
+
+            _Tip: You can toggle AI features on/off at the bottom right._
+            """
+        )
+    st.markdown("</div>", unsafe_allow_html=True)
 
     # Create tabs with bold styling
     tab_names = [

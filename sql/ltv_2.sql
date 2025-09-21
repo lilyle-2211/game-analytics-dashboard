@@ -3,27 +3,27 @@
 -- Used for: LTV analytics dashboard - analyzing user retention patterns over 20-day window
 
 WITH user_installs AS (
-  SELECT 
-    
+  SELECT
+
     u.user_id,
     DATE(u.install_date) as install_date,
-  FROM `tactile-471816.data_analyst_test_local.users_view` u
+  FROM `game-analytics.data_analyst_test_local.users_view` u
   WHERE u.install_date IS NOT NULL
     AND DATE(u.install_date) >= '2022-06-06'
     AND DATE(u.install_date) <= DATE_SUB(CURRENT_DATE(), INTERVAL 21 DAY)  -- Ensure 20+ days of data
 ),
 
 user_activity AS (
-  SELECT 
+  SELECT
     user_id,
     a.date as activity_date
-  FROM `tactile-471816.data_analyst_test_local.activity_view` a
-  WHERE a.date IS NOT NULL 
+  FROM `game-analytics.data_analyst_test_local.activity_view` a
+  WHERE a.date IS NOT NULL
     AND a.user_id IS NOT NULL
 ),
 
 daily_retention_calculation AS (
-  SELECT 
+  SELECT
     ui.user_id,
     ui.install_date,
     -- Check activity for each day (1-20) since install
@@ -53,9 +53,9 @@ daily_retention_calculation AS (
 )
 
 -- Calculate retention rates for each day
-SELECT 
+SELECT
   COUNT(*) as total_installed_users,
-  
+
   -- Day 1-20 retention rates
   ROUND(SUM(active_day_1) * 100.0 / COUNT(*), 2) as day_1_retention_pct,
   ROUND(SUM(active_day_2) * 100.0 / COUNT(*), 2) as day_2_retention_pct,
@@ -77,7 +77,7 @@ SELECT
   ROUND(SUM(active_day_18) * 100.0 / COUNT(*), 2) as day_18_retention_pct,
   ROUND(SUM(active_day_19) * 100.0 / COUNT(*), 2) as day_19_retention_pct,
   ROUND(SUM(active_day_20) * 100.0 / COUNT(*), 2) as day_20_retention_pct,
-  
+
   -- Raw counts for reference
   SUM(active_day_1) as day_1_active_users,
   SUM(active_day_7) as day_7_active_users,

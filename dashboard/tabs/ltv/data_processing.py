@@ -143,13 +143,23 @@ def create_segment_plot_data(df):
 
 
 def create_retention_curve_data(df):
-    """Prepare retention rate data for curve plotting with 90-day projection."""
+    """
+    Prepare retention rate data for curve plotting with 90-day projection.
+
+    This function fits a Weibull curve to the actual retention data (days 1-20) using non-linear least squares (scipy.optimize.curve_fit).
+    The Weibull distribution is commonly used for retention/churn modeling because it can flexibly capture both the steep early drop-off and the slower long-term decline seen in real user data.
+    By fitting the Weibull model, we can project retention rates for days 21-90 in a mathematically grounded way, even when only short-term data is available.
+    A conservative decay adjustment is applied for days beyond 20 to avoid overestimating long-term retention.
+    """
 
     if df.empty:
         return pd.DataFrame()
 
     # Import required libraries for modeling
     import numpy as np
+
+    # curve_fit is used to estimate the best-fit parameters (lambda, gamma) for the Weibull model
+    # based on the observed retention data. This is a standard approach for fitting parametric models.
     from scipy.optimize import curve_fit
 
     # Find retention columns
@@ -164,16 +174,16 @@ def create_retention_curve_data(df):
     retention_fraction = actual_retention_values / 100.0  # convert to fraction
     days_1_20 = np.arange(1, 21)
 
-    # Define Weibull model with conservative adjustment
+    # Weibull model: flexible for retention/churn, fits both sharp initial drop and long tail
     def weibull(t, lambda_, gamma):
         base_retention = np.exp(-((t / lambda_) ** gamma))
-        # Apply conservative adjustment for projections beyond day 20
-        if hasattr(t, "__iter__"):  # Handle array input
+        # For days > 20, apply extra decay to avoid optimistic projections
+        if hasattr(t, "__iter__"):
             adjustment = np.where(t > 20, 0.85 ** ((t - 20) / 10), 1.0)
             return base_retention * adjustment
-        else:  # Handle scalar input
+        else:
             if t > 20:
-                adjustment = 0.85 ** ((t - 20) / 10)  # 15% additional decay per 10 days
+                adjustment = 0.85 ** ((t - 20) / 10)
                 return base_retention * adjustment
             return base_retention
 
