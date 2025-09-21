@@ -76,10 +76,10 @@ def render_contact_tab():
     st.markdown(
         '<div class="summary-box">'
         "<b>Professional Summary</b><br>"
-        "<p>With over a decade of experience working with data, I blend a love for numbers with a creative approach to problem-solving.</p>"
+        "<p>With several years of experience working with data, I blend a love for numbers with a creative approach to problem-solving.</p>"
         "<p>My background in mathematics and software development has fueled my passion for building smart, reliable, and impactful data solutions.</p>"
         "<p>Whether it's designing data strategies, ensuring data quality, or diving into analytics, machine learning, and GenAI, I thrive on turning ideas into production-ready systems.</p>"
-        "<p>I believe in the power of data to tell stories and drive innovation—and I enjoy every step of the journey!</p>"
+        "<p>I believe in the power of data to tell stories and drive innovation, and I enjoy every step of the journey!</p>"
         "</div>",
         unsafe_allow_html=True,
     )
