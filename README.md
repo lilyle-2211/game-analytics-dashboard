@@ -4,8 +4,7 @@
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/lilyle-2211/analytics-dashboard-portfolio.git
-   cd analytics-dashboard-portfolio
+   git clone https://github.com/lilyle-2211/game-analytics.git
    ```
 
 2. **Install dependencies**
