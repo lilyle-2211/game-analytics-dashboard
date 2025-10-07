@@ -6,7 +6,7 @@ SELECT
   COUNT(DISTINCT user_id) as daily_active_users,
   SUM(levels_played) as total_levels_played,
   SUM(levels_completed) as total_levels_completed
-FROM `game-analytics.data_analyst_test_local.activity`
+FROM `game-analytics.data.activity`
 WHERE date IS NOT NULL and date >='2022-06-06'
 GROUP BY date
 ORDER BY date
@@ -16,7 +16,7 @@ DAILY_RETURN_RATE_QUERY = """
 WITH all_users AS (
   SELECT
     COUNT(DISTINCT user_id) as unique_users_count
-  FROM `game-analytics.data_analyst_test_local.activity`
+  FROM `game-analytics.data.activity`
   WHERE date IS NOT NULL AND date >='2022-06-06' AND user_id IS NOT NULL
 ),
 user_daily_activity AS (
@@ -24,7 +24,7 @@ user_daily_activity AS (
     user_id,
     date,
     LAG(date) OVER (PARTITION BY user_id ORDER BY date) as prev_date,
-  FROM `game-analytics.data_analyst_test_local.activity`
+  FROM `game-analytics.data.activity`
   WHERE date IS NOT NULL AND date >='2022-06-06' AND user_id IS NOT NULL
 ),
 daily_returns AS (
@@ -54,7 +54,7 @@ WITH user_installs AS (
     u.user_id,
     REGEXP_EXTRACT(u.user_id, r'_(\d+)') as numeric_user_id,
     DATE(SAFE.PARSE_TIMESTAMP('%Y-%m-%dT%H:%M:%E*SZ', u.install_date)) as install_date
-  FROM `game-analytics.data_analyst_test_local.users` u
+  FROM `game-analytics.data.users` u
   WHERE u.install_date IS NOT NULL
     AND DATE(SAFE.PARSE_TIMESTAMP('%Y-%m-%dT%H:%M:%E*SZ', u.install_date)) >= '2020-01-01'
     AND DATE(SAFE.PARSE_TIMESTAMP('%Y-%m-%dT%H:%M:%E*SZ', u.install_date)) <= CURRENT_DATE()
@@ -63,7 +63,7 @@ user_activity AS (
   SELECT
     CAST(a.user_id AS STRING) as numeric_user_id,
     a.date as activity_date
-  FROM `game-analytics.data_analyst_test_local.activity` a
+  FROM `game-analytics.data.activity` a
   WHERE a.date IS NOT NULL AND a.user_id IS NOT NULL
 ),
 two_week_retention AS (
@@ -103,7 +103,7 @@ WITH user_level_progression AS (
     date,
     max_level_completed,
     ROW_NUMBER() OVER (PARTITION BY user_id, max_level_completed ORDER BY date) as rn
-  FROM `game-analytics.data_analyst_test_local.activity`
+  FROM `game-analytics.data.activity`
   WHERE date IS NOT NULL
     AND date >= '2022-06-06'
     AND user_id IS NOT NULL
@@ -121,7 +121,7 @@ user_first_activity AS (
   SELECT
     user_id,
     MIN(date) as first_active_date
-  FROM `game-analytics.data_analyst_test_local.activity`
+  FROM `game-analytics.data.activity`
   WHERE date IS NOT NULL
     AND date >= '2022-06-06'
     AND user_id IS NOT NULL
@@ -132,7 +132,7 @@ user_max_levels AS (
     user_id,
     MIN(date) as first_active_date,
     MAX(max_level_completed) as highest_level_reached
-  FROM `game-analytics.data_analyst_test_local.activity`
+  FROM `game-analytics.data.activity`
   WHERE date IS NOT NULL
     AND date >= '2022-06-06'
     AND user_id IS NOT NULL
