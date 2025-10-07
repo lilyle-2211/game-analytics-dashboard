@@ -441,14 +441,14 @@ def render_ltv_tab():
         with col1:
             st.markdown("**Revenue LTV Data Generation:**")
             st.markdown(
-                "**Data Source:** `tactile-471816.data_analyst_test_local.users_view`, `tactile-471816.data_analyst_test_local.revenue_view`"
+                "**Data Source:** `game-analytics.data.users_view`, `game-analytics.data.revenue_view`"
             )
             st.markdown("**SQL Query:**")
             ltv_query = """WITH user_installs AS (
   SELECT
     user_id,
     DATE(install_date) AS install_date
-  FROM `tactile-471816.data_analyst_test_local.users_view`
+  FROM `game-analytics.data.users_view`
   WHERE DATE(install_date) >= '2022-06-06'
     AND install_date IS NOT NULL
 ),
@@ -459,7 +459,7 @@ revenue_20 AS (
     r.transaction_value,
     DATE_DIFF(DATE(r.date), ui.install_date, DAY) AS day_offset
   FROM user_installs ui
-  LEFT JOIN `tactile-471816.data_analyst_test_local.revenue_view` r
+  LEFT JOIN `game-analytics.data.revenue_view` r
     ON ui.user_id = r.user_id
    AND DATE_DIFF(DATE(r.date), ui.install_date, DAY) BETWEEN 0 AND 19
 )
