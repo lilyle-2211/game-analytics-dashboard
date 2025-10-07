@@ -38,7 +38,7 @@ def load_and_process_acquisition_data():
 def display_raw_data_sample(df):
     """Display raw data sample and SQL query."""
     with st.expander("📋 SQL Query & Data Sample", expanded=False):
-        st.markdown("**Data Source:** `game-analytics.data_analyst_test_local.users`")
+        st.markdown("**Data Source:** `game-analytics.data.users`")
         st.markdown("**SQL Query:**")
         st.code(PLAYER_DISTRIBUTION_QUERY, language="sql")
         st.markdown("**Query Explanation:**")
