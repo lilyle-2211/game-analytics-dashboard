@@ -306,7 +306,7 @@ def display_raw_data_section(df, anomaly_df):
     """Display raw data and SQL query section."""
     with st.expander("📋 SQL Query & Data Sample", expanded=False):
         st.markdown(
-            "**Data Source:** `game-analytics.data_analyst_test_local.revenues`"
+            "**Data Source:** `game-analytics.data.revenues`"
         )
         st.markdown("**SQL Query:**")
         st.code(REVENUE_BY_SOURCE_QUERY, language="sql")
