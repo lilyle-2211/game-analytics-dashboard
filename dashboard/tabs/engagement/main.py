@@ -100,7 +100,7 @@ def _render_daily_return_rate_analysis(explainer):
             with col2:
                 st.markdown("**Daily Return Rate Data:**")
                 st.markdown(
-                    "**Data Source:** `game-analytics.data_analyst_test_local.activity`"
+                    "**Data Source:** `game-analytics.data.activity`"
                 )
                 st.markdown("**SQL Query:**")
                 st.code(DAILY_RETURN_RATE_QUERY, language="sql")
