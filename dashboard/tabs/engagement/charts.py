@@ -132,7 +132,7 @@ def plot_daily_engagement(explainer):
         # Display raw data sample and SQL query
         with st.expander("📋 SQL Query & Data Sample", expanded=False):
             st.markdown(
-                "**Data Source:** `game-analytics.data_analyst_test_local.activity`"
+                "**Data Source:** `game-analytics.data.activity`"
             )
             st.markdown("**SQL Query:**")
             st.code(DAILY_ENGAGEMENT_QUERY, language="sql")
@@ -240,7 +240,7 @@ def plot_two_week_retention(explainer):
         # Display SQL query
         with st.expander("📋 SQL Query", expanded=False):
             st.markdown(
-                "**Data Sources:** `game-analytics.data_analyst_test_local.users`, `game-analytics.data_analyst_test_local.activity`"
+                "**Data Sources:** `game-analytics.data.users`, `game-analytics.data.activity`"
             )
             st.markdown("**SQL Query:**")
             st.code(TWO_WEEK_RETENTION_QUERY, language="sql")
@@ -300,7 +300,7 @@ def plot_progression_milestones(explainer):
         # Display raw data sample and SQL query
         with st.expander("📋 SQL Query & Data Sample", expanded=False):
             st.markdown(
-                "**Data Source:** `game-analytics.data_analyst_test_local.activity`"
+                "**Data Source:** `game-analytics.data.activity`"
             )
             st.markdown("**SQL Query:**")
             st.code(PROGRESSION_MILESTONE_QUERY, language="sql")
